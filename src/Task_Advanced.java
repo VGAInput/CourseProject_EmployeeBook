@@ -15,16 +15,18 @@ public class Task_Advanced {
         employees[8] = new Employee("Przemek Roch", 51_500, 4);
         employees[9] = new Employee("Pranay Lawrie", 30_650, 5);
 
-        findEmployeeSalaryMoreThan(50000);
+        getTotalSalaryByDepartment(1);
 
     }
 
     /*
-        Проиндексировать зарплату (вызвать изменение зарплат у всех сотрудников на величину аргумента в %).
+        Проиндексировать зарплату (вызвать изменение зарплат у всех сотрудников на величину аргумента в %).
     */
     private static void increaseSalaryByPercent(double percent) {
         for (Employee e : employees) {
-            e.setSalary((int) (e.getSalary() + (e.getSalary() * (percent / 100))));
+            if (e != null) {
+                e.setSalary((int) (e.getSalary() + (e.getSalary() * (percent / 100))));
+            }
         }
     }
 
@@ -37,19 +39,16 @@ public class Task_Advanced {
     */
     private static Employee getLeastSalaryByDepartment(int department) {
 
-        Employee lesserSalary = employees[0];
-        int minimumSalary = lesserSalary.getSalary();
+        Employee employeeWithLeastSalary = getAllEmployeesFromDepartment(department)[0];
 
         for (Employee e : employees) {
-            if (e.getDepartment() == department) {
-                if (e.getSalary() < minimumSalary) {
-                    minimumSalary = e.getSalary();
-                    lesserSalary = e;
+            if (e != null && e.getDepartment() == department) {
+                if (e.getSalary() < employeeWithLeastSalary.getSalary()) {
+                    employeeWithLeastSalary = e;
                 }
             }
         }
-
-        return lesserSalary;
+        return employeeWithLeastSalary;
     }
 
     /*
@@ -57,18 +56,17 @@ public class Task_Advanced {
      */
 
     private static Employee getHighestSalaryByDepartment(int department) {
-        Employee HighestSalary = employees[0];
-        int maxSalary = HighestSalary.getSalary();
+
+        Employee employeeWithHighestSalary = getAllEmployeesFromDepartment(department)[0];
 
         for (Employee e : employees) {
-            if (e.getDepartment() == department) {
-                if (e.getSalary() > maxSalary) {
-                    maxSalary = e.getSalary();
-                    HighestSalary = e;
+            if (e != null && e.getDepartment() == department) {
+                if (e.getSalary() > employeeWithHighestSalary.getSalary()) {
+                    employeeWithHighestSalary = e;
                 }
             }
         }
-        return HighestSalary;
+        return employeeWithHighestSalary;
     }
 
     /*
@@ -77,11 +75,12 @@ public class Task_Advanced {
     private static int getTotalSalaryByDepartment(int department) {
 
         int total = 0;
-        for (Employee e : employees) {
-            if (e.getDepartment() == department) {
+        for (Employee e : getAllEmployeesFromDepartment(department)) {
+            if (e != null && e.getDepartment() == department) {
                 total = total + e.getSalary();
             }
         }
+
         return total;
 
     }
@@ -94,8 +93,8 @@ public class Task_Advanced {
         int employeesAmmount = 0;
         int averageSalary = 0;
 
-        for (Employee e : employees) {
-            if (e.getDepartment() == department) {
+        for (Employee e : getAllEmployeesFromDepartment(department)) {
+            if (e != null && e.getDepartment() == department) {
                 averageSalary = averageSalary + e.getSalary();
                 employeesAmmount++;
             }
@@ -111,8 +110,8 @@ public class Task_Advanced {
     Проиндексировать зарплату всех сотрудников отдела на процент, который приходит в качестве параметра.
     */
     private static void increaseSalaryByPercentInDepartment(int department, double percent) {
-        for (Employee e : employees) {
-            if (e.getDepartment() == department) {
+        for (Employee e : getAllEmployeesFromDepartment(department)) {
+            if (e != null && e.getDepartment() == department) {
                 e.setSalary((int) (e.getSalary() + (e.getSalary() * (percent / 100))));
             }
         }
@@ -122,8 +121,8 @@ public class Task_Advanced {
     Напечатать всех сотрудников отдела (все данные, кроме отдела).
     */
     private static void getAllEmployeeNamesInDepartment(int department) {
-        for (Employee e : employees) {
-            if (e.getDepartment() == department) {
+        for (Employee e : getAllEmployeesFromDepartment(department)) {
+            if (e != null && e.getDepartment() == department) {
                 System.out.println(e.getName() + ": salary: " + e.getSalary() + ", id: " + e.getId());
             }
         }
@@ -133,25 +132,48 @@ public class Task_Advanced {
     Получить в качестве параметра число и найти:
 ==================================================*/
 
-/*
-    Всех сотрудников с зарплатой меньше числа (вывести id, Ф. И. О. и зарплатой в консоль).
-*/
-    private static void findEmployeeSalaryLessThan(int salary){
-        for (Employee e: employees) {
-            if (e.getSalary() < salary) {
+    /*
+        Всех сотрудников с зарплатой меньше числа (вывести id, Ф. И. О. и зарплатой в консоль).
+    */
+    private static void findEmployeeSalaryLessThan(int salary) {
+        for (Employee e : employees) {
+            if (e != null && e.getSalary() < salary) {
                 System.out.println(e.getName() + ": salary: " + e.getSalary() + ", id: " + e.getId());
             }
         }
     }
+
     /*
     Всех сотрудников с зарплатой больше (или равно) числа
     (вывести id, Ф. И. О. и зарплатой в консоль).
 */
-    private static void findEmployeeSalaryMoreThan(int salary){
-        for (Employee e: employees) {
-            if (e.getSalary() >= salary) {
+    private static void findEmployeeSalaryMoreThan(int salary) {
+        for (Employee e : employees) {
+            if (e != null && e.getSalary() >= salary) {
                 System.out.println(e.getName() + ": salary: " + e.getSalary() + ", id: " + e.getId());
             }
         }
     }
+    private static Employee[] getAllEmployeesFromDepartment(int department) {
+        int arrayLength = 0;
+        Employee[] employeesFromDept;
+        for (Employee e : employees) {
+            if (e != null && e.getDepartment() == department) {
+                arrayLength++;
+            }
+        }
+        employeesFromDept = new Employee[arrayLength];
+        arrayLength = 0;
+        for (Employee e : employees) {
+            if (e != null && e.getDepartment() == department) {
+                employeesFromDept[arrayLength] = e;
+                arrayLength++;
+            }
+        }
+
+        System.out.println(employeesFromDept.length);
+
+        return employeesFromDept;
+    }
+
 }

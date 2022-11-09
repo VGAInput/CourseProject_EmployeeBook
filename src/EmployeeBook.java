@@ -15,7 +15,11 @@ public class EmployeeBook {
         employees[8] = new Employee("Przemek Roch", 51_500, 4);
         employees[9] = new Employee("Pranay Lawrie", 30_650, 5);
 
-        getEmployeesByDepartments();
+        System.out.println(employees[8].toString());
+        removeEmployee(8);
+        removeEmployee(8);
+
+
     }
 
     /*
@@ -35,7 +39,7 @@ public class EmployeeBook {
     */
     public void removeEmployee(int findId) {
         for (int i = 0; i < employees.length - 1; i++) {
-            if (employees[i].getId() == findId) {
+            if (employees[i] != null && employees[i].getId() == findId) {
                 employees[i] = null;
                 break;
             }
@@ -63,9 +67,10 @@ public class EmployeeBook {
             }
         }
     }
-        /*
-           -Получить Ф. И. О. всех сотрудников по отделам (напечатать список отделов и их сотрудников).
-        */
+
+    /*
+       -Получить Ф. И. О. всех сотрудников по отделам (напечатать список отделов и их сотрудников).
+    */
     public void getEmployeesByDepartments() {
 
         int ammountOfDepartments = 5;
@@ -75,11 +80,10 @@ public class EmployeeBook {
             emplyeeNames = "";
             for (Employee e : employees) {
 
-                if (e != null) {
-                    if (e.getDepartment() == i) {
-                        emplyeeNames += e.getName() + ", ";
-                    }
+                if (e.getDepartment() == i && e != null) {
+                    emplyeeNames += e.getName() + ", ";
                 }
+                
             }
             System.out.println("Employees of dept. #" + i + ": " + emplyeeNames);
         }
